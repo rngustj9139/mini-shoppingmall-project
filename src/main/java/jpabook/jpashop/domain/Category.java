@@ -31,6 +31,12 @@ public class Category {
     private Category parent; // 부모는 자기 자신의 타입을 가짐
 
     @OneToMany(mappedBy = "parent")
-    private List<Category> chidren = new ArrayList<>(); // 자식은 여러개임
+    private List<Category> children = new ArrayList<>(); // 자식은 여러개임
+
+    //== 연관관계 편의 메서드==// (양방향 연관관계인 경우만)
+    public void addChildCategory(Category children) {
+        this.children.add(children);
+        children.setParent(this);
+    }
 
 }
