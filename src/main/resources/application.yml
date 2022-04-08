@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/practicejpa1  # ;MVCC=TRUE로 설정해야 여러 컴퓨터가 DB에 접근했을때 빠르게 처리가 된다. (but 최근 버전에는 사용 불가)
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver # DB 커넥션과 관련된 설정
+
+  jpa:
+    hibernate:
+      ddl-auto: create # 자동으로 테이블을 만듦, 어플리케이션 실행시점에 가지고 있는 테이블 다 지우고 새로 생성
+    properties:
+      hibernate:
+#       show_sql: true
+        format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug # 로그 레밸 설정, jpa에서 생성되는 sql이 로그를 통해서 출력됨 (show_sql은 sout으로 출력됨)
+    org.hibernate.type: trace # 쿼리 찍힐때 (?, ?) 같은 쿼리 파라미터에서 ?가 무슨 값을 가졌는지 알려준다.
