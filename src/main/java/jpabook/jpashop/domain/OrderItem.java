@@ -3,8 +3,10 @@ package jpabook.jpashop.domain;
 import jpabook.jpashop.domain.item.Item;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.catalina.valves.HealthCheckValve;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -27,5 +29,27 @@ public class OrderItem {
     private int orderPrice;
 
     private int count;
+
+    //== 비즈니스 로직 ==//
+    public void cancel() {
+        this.getItem().addStock(count);
+    }
+
+    public int getTotalPrice() {
+        return this.getOrderPrice() * this.getCount();
+    }
+
+    //== 생성 메서드 ==//
+    public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
+        OrderItem orderItem = new OrderItem();
+
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
+
+        item.removeStock(count);
+
+        return orderItem;
+    }
 
 }
