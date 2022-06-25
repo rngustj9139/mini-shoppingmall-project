@@ -51,7 +51,7 @@ public class MemberServiceTest {
         try { // try, catch문 대신 @Test(expected = IllegalStateException.class) 이용하면 된다.
             memberService.join(member2);
         } catch (IllegalStateException e) {
-            return;
+            return; // 예외가 발생하고 정상적으로 리턴
         }
 
         // then
