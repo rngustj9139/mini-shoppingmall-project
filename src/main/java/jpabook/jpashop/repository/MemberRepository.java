@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public class MemberRepository {
 
-    @PersistenceContext
+    @PersistenceContext // 스프링 부트가 자동으로 엔티티 메니저를 주입시켜준다.
     private EntityManager em;
 
     public void save(Member member) {

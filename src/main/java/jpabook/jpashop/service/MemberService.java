@@ -24,7 +24,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Autowired
-    public MemberService(MemberRepository memberRepository) { // 생성자 주입
+    public MemberService(MemberRepository memberRepository) { // 생성자 주입, 이부분 작성 안하고 그냥 롬복의 @AllArgsConstructor나 @RequiredArgsConstruct 사용할 수도 있다.
         this.memberRepository = memberRepository;
     }
 
