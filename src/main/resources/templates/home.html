@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>home</title>
+</head>
+<body>
+
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
+
+    <div class="jumbotron">
+        <h1>HELLO SHOP</h1>
+        <p class="lead">회원 기능</p>
+        <p>
+            <a href="/members/new" class="btn btn-lg btn-secondary">회원 가입</a>
+            <a href="/members" class="btn btn-lg btn-secondary">회원 목록</a>
+        </p>
+        <p class="lead">상품 기능</p>
+        <p>
+            <a href="/items/new" class="btn btn-lg btn-dark">상품 등록</a>
+            <a href="/items" class="btn btn-lg btn-dark">상품 목록</a>
+        </p>
+        <p class="lead">주문 기능</p>
+        <p>
+            <a href="/items/new" class="btn btn-lg btn-info">상품 주문</a>
+            <a href="/items" class="btn btn-lg btn-info">주문 내역</a>
+        </p>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+
+</body>
+</html>
