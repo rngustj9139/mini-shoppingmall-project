@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE) // 상속관계 전략 지정 (싱글테이블 사용할 것임)
 @DiscriminatorColumn(name = "dtype")
 public abstract class Item { // 추상 클래스로 만듦, 상속관계 매핑 할 것임
