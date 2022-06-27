@@ -26,7 +26,7 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // cascade를 사용함으로써 Order 엔티티를 persist하면 orderItems들도 저절로 persist됨(모든 엔티티는 각각 persist 해야하는데 이걸 사용하므로 안그래도 된다)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // cascade 때문에 order가 persist되면 delivery도 persist된다.
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
@@ -51,7 +51,7 @@ public class Order {
         delivery.setOrder(this);
     }
 
-    //== 생성 메서드 ==//
+    //== 생성 메서드 ==// (엔티티에 비즈니스 로직을 몰아 넣는 것을 도메인 모델 패턴이라고 한다. - 반대는 트랜잭션 스크립트 패턴이라고 함)
     public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) { // ...은 여러개를 넘긴다는 의미이다.
         Order order = new Order();
 
