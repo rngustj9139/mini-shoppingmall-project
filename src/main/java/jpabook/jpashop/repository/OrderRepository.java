@@ -21,6 +21,8 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
-//  public List<Order> findAll(OrderSearch orderSearch) {}
+    public List<Order> findAll(OrderSearch orderSearch) { // 동적 쿼리를 이용한 검색 구현
+
+    }
 
 }
