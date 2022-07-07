@@ -41,7 +41,7 @@ public class MemberController {
 
         memberService.join(member);
 
-        return "redirect:/"; // PRG 패턴턴
+        return "redirect:/"; // PRG 패턴
     }
 
     @GetMapping("/members")
