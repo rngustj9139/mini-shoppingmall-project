@@ -15,9 +15,9 @@ public class ItemRepository {
 
     public void save(Item item) {
         if (item.getId() == null) {
-            em.persist(item);
+            em.persist(item); // 처음 저장하는 상품인경우 persist
         } else {
-            em.merge(item);
+            em.merge(item); // 상품을 수정하는 경우 merge (준영속 엔티티는 변경감지나 merge를 이용해야한다.)
         }
     }
 
