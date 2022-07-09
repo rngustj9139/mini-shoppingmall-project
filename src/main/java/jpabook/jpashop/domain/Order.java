@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +20,7 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY) // OneToOne, ManyToOne은 디폴트가 즉시로딩(EAGER)이기 때문에 지연로딩(LAZY)로 바꿔준다.
+    @ManyToOne(fetch = FetchType.LAZY) // OneToOne, ManyToOne은 디폴트가 즉시로딩(EAGER)이기 때문에 지연로딩(LAZY)로 바꿔준다. => 진짜 DB에서 맴버를 가져오는 것이 아닌 가짜 프록시 객체를 갖는다. 멤버를 손댈때 진짜 DB에서 정보를 가져온다.
     @JoinColumn(name = "member_id") // 다쪽이 연관관계의 주인, 외래키 관리
     private Member member;
 

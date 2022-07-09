@@ -17,3 +17,4 @@ logging:
   level:
     org.hibernate.SQL: debug # 로그 레밸 설정, jpa에서 생성되는 sql이 로그를 통해서 출력됨 (show_sql은 sout으로 출력됨)
     org.hibernate.type: trace # 쿼리 찍힐때 (?, ?) 같은 쿼리 파라미터에서 ?가 무슨 값을 가졌는지 알려준다.
+
