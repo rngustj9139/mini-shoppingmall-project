@@ -52,7 +52,7 @@ public class Order {
     }
 
     //== 생성 메서드 ==// (엔티티에 비즈니스 로직을 몰아 넣는 것을 도메인 모델 패턴이라고 한다. - 반대는 트랜잭션 스크립트 패턴이라고 함)
-    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) { // ...은 여러개를 넘긴다는 의미이다.
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) { // ...은 여러개를 넘긴다는 의미이다. (배열형식으로 넘어옴)
         Order order = new Order();
 
         order.setMember(member);

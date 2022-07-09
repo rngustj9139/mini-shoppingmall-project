@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,7 @@ public class Member {
     @Embedded
     private Address address;
 
+    @JsonIgnore // MemberApiController에서 전체 회원 조회 할때 이건 제외한다는 의미이다.
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
