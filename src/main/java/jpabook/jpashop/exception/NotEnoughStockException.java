@@ -1,6 +1,6 @@
 package jpabook.jpashop.exception;
 
-public class NotEnoughStockException extends RuntimeException {
+public class NotEnoughStockException extends RuntimeException { // 상속받고 오버라이딩 함
 
     public NotEnoughStockException() {
         super();

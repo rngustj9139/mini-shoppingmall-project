@@ -20,7 +20,7 @@ public class Order {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY) // OneToOne, ManyToOne은 디폴트가 즉시로딩(EAGER)이기 때문에 지연로딩(LAZY)로 바꿔준다.
-    @JoinColumn(name = "member_id") // 연관관계의 주인, 외래키 관리
+    @JoinColumn(name = "member_id") // 다쪽이 연관관계의 주인, 외래키 관리
     private Member member;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // cascade를 사용함으로써 Order 엔티티를 persist하면 orderItems들도 저절로 persist됨(모든 엔티티는 각각 persist 해야하는데 이걸 사용하므로 안그래도 된다)

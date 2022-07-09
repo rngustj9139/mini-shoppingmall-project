@@ -54,4 +54,8 @@ public class MemberService {
         return memberRepository.findOne(memberId);
     }
 
+    public void update(Long id, String name) { // /api/v2/members/{id}
+        Member member = memberRepository.findOne(id); // member는 영속상태이다.
+        member.setName(name); // 변경 감지를 이용한 업데이트
+    }
 }
