@@ -2,6 +2,7 @@ package jpabook.jpashop.repository;
 
 import jpabook.jpashop.domain.Order;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -74,14 +75,21 @@ public class OrderRepository {
     public List<Order> findAllWithMemberDelivery() { // (OrderSim[leApiController의 orderV3를 위해 만들어짐) 패치 조인 이용 => 한방 쿼리로 order를 포함해 member, delivery 까지 조회함
         return em.createQuery("select o from Order o" +
                                 " join fetch o.member m" +
-                                " join fetch o.delivery d", Order.class)
-                                .getResultList();
+                                " join fetch o.delivery d", Order.class).getResultList();
     }
 
     public List<OrderSimpleQueryDto> findOrderDtos() { // (OrderSim[leApiController의 orderV4를 위해 만들어짐)
         return em.createQuery("select new jpabook.jpashop.repository.OrderSimpleQueryDto(o.id, m.name, o.orderDate, o.status, d.address) from Order o" +
                               " join o.member m" +
                               " join o.delivery d", OrderSimpleQueryDto.class).getResultList();
+    }
+
+    public List<Order> findAllWithItem() { // OrderApiController의 orderV3을 위해 사용된다. (성능 최적화를 위해 페치 조인 수행)
+        return em.createQuery("select o from Order o" +
+                                      " join fetch o.member m" +
+                                      " join fetch o.delivery d" +
+                                      " join fetch o.orderItems oi" +
+                                      " join fetch oi.item i", Order.class).getResultList(); // order가 1개이고 orderItems가 4개인 경우에는 데이터가 4개가 된다.
     }
 
 //    public List<Order> findAll(OrderSearch orderSearch) { // queryDSL 없이 검색 구현 => JPA criteria 사용 => 이건 유지보수성이 너무 떨어져서 이것도 권장하지 않음

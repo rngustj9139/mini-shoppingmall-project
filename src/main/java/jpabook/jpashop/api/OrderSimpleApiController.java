@@ -23,7 +23,7 @@ public class OrderSimpleApiController {
     private final OrderRepository orderRepository;
 
     @GetMapping("/api/v1/simple-orders")
-    public List<Order> orderV1() { // 이 함수는 필요 없는 데이터까지 노출되서 문제가 생긴다.
+    public List<Order> orderV1() { // 이 함수는 필요 없는 데이터까지 노출되서 문제가 생긴다. (엔티티를 직접 노출)
         List<Order> all = orderRepository.findAll(new OrderSearch());
 
         for (Order order : all) {
