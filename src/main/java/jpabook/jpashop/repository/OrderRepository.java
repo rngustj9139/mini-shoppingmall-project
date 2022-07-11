@@ -71,6 +71,19 @@ public class OrderRepository {
         return query.getResultList();
     }
 
+    public List<Order> findAllWithMemberDelivery() { // (OrderSim[leApiController의 orderV3를 위해 만들어짐) 패치 조인 이용 => 한방 쿼리로 order를 포함해 member, delivery 까지 조회함
+        return em.createQuery("select o from Order o" +
+                                " join fetch o.member m" +
+                                " join fetch o.delivery d", Order.class)
+                                .getResultList();
+    }
+
+    public List<OrderSimpleQueryDto> findOrderDtos() { // (OrderSim[leApiController의 orderV4를 위해 만들어짐)
+        return em.createQuery("select new jpabook.jpashop.repository.OrderSimpleQueryDto(o.id, m.name, o.orderDate, o.status, d.address) from Order o" +
+                              " join o.member m" +
+                              " join o.delivery d", OrderSimpleQueryDto.class).getResultList();
+    }
+
 //    public List<Order> findAll(OrderSearch orderSearch) { // queryDSL 없이 검색 구현 => JPA criteria 사용 => 이건 유지보수성이 너무 떨어져서 이것도 권장하지 않음
 //        ~~~~~~~~~~~
 //    }
