@@ -1,8 +1,8 @@
 package jpabook.jpashop.repository;
 
 import jpabook.jpashop.domain.Order;
+import jpabook.jpashop.repository.simplequery.OrderSimpleQueryDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -93,10 +93,13 @@ public class OrderRepository {
     }
 
 
-    public List<Order> findAllWithMemberDelivery2() { // (OrderApiController의 orderV3.1를 위해 만들어짐)
+    public List<Order> findAllWithMemberDelivery2(int offset, int limit) { // (OrderApiController의 orderV3.1를 위해 만들어짐)
         return em.createQuery("select o from Order o" +
                 " join fetch o.member m" +
-                " join fetch o.delivery d", Order.class).getResultList();
+                " join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
     }
 
 //    public List<Order> findAll(OrderSearch orderSearch) { // queryDSL 없이 검색 구현 => JPA criteria 사용 => 이건 유지보수성이 너무 떨어져서 이것도 권장하지 않음

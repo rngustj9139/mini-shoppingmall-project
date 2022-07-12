@@ -6,6 +6,8 @@ import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
+import jpabook.jpashop.repository.query.OrderQueryDto;
+import jpabook.jpashop.repository.query.OrderQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 public class OrderApiController { // OrderSimpleApiController는 ManyToOne이나 OneToOne이었던것을 다뤘지만 이것은 OneToMany같은 것을 다룬다. (컬렉션 조회)
 
     private final OrderRepository orderRepository;
+    private final OrderQueryRepository orderQueryRepository;
 
     @GetMapping("/api/v1/orders")
     public List<Order> ordersV1() { // 엔티티를 직접노춣
@@ -60,15 +63,20 @@ public class OrderApiController { // OrderSimpleApiController는 ManyToOne이나
     }
 
     @GetMapping("/api/v3.1/orders")
-    public List<OrderDto> orderV3_1(@RequestParam(value = "offset", defaultValue = "0") int offset,
+    public List<OrderDto> orderV3_1(@RequestParam(value = "offset", defaultValue = "0") int offset, // application.yml의 default_batch_fetch_size 확인
                                     @RequestParam(value = "limit", defaultValue = "100") int limit) { // 페이징 수행
-        List<Order> orders = orderRepository.findAllWithMemberDelivery2(); // OneToOne, ManyToOne은 그냥 페치 조인을 하고 ToMany(컬렉션 조회)는
+        List<Order> orders = orderRepository.findAllWithMemberDelivery2(offset, limit); // OneToOne, ManyToOne은 그냥 페치 조인을 하고 ToMany(컬렉션 조회)는
 
         List<OrderDto> collect = orders.stream()
                 .map(o -> new OrderDto(o))
                 .collect(Collectors.toList());
 
         return collect;
+    }
+
+    @GetMapping("/api/v4/orders")
+    public List<OrderQueryDto> orderV4() {
+        orderQueryRepository.findOrderQueryDtos();
     }
 
     @Data
