@@ -9,6 +9,7 @@ import jpabook.jpashop.repository.OrderSearch;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -50,6 +51,18 @@ public class OrderApiController { // OrderSimpleApiController는 ManyToOne이나
     @GetMapping("/api/v3/orders")
     public List<OrderDto> orderV3() {
         List<Order> orders = orderRepository.findAllWithItem();
+
+        List<OrderDto> collect = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(Collectors.toList());
+
+        return collect;
+    }
+
+    @GetMapping("/api/v3.1/orders")
+    public List<OrderDto> orderV3_1(@RequestParam(value = "offset", defaultValue = "0") int offset,
+                                    @RequestParam(value = "limit", defaultValue = "100") int limit) { // 페이징 수행
+        List<Order> orders = orderRepository.findAllWithMemberDelivery2(); // OneToOne, ManyToOne은 그냥 페치 조인을 하고 ToMany(컬렉션 조회)는
 
         List<OrderDto> collect = orders.stream()
                 .map(o -> new OrderDto(o))

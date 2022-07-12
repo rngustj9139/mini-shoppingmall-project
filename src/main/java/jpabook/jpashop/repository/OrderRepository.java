@@ -72,7 +72,7 @@ public class OrderRepository {
         return query.getResultList();
     }
 
-    public List<Order> findAllWithMemberDelivery() { // (OrderSim[leApiController의 orderV3를 위해 만들어짐) 패치 조인 이용 => 한방 쿼리로 order를 포함해 member, delivery 까지 조회함
+    public List<Order> findAllWithMemberDelivery() { // (OrderSimpleApiController의 orderV3를 위해 만들어짐) 패치 조인 이용 => 한방 쿼리로 order를 포함해 member, delivery 까지 조회함
         return em.createQuery("select o from Order o" +
                                 " join fetch o.member m" +
                                 " join fetch o.delivery d", Order.class).getResultList();
@@ -84,12 +84,19 @@ public class OrderRepository {
                               " join o.delivery d", OrderSimpleQueryDto.class).getResultList();
     }
 
-    public List<Order> findAllWithItem() { // OrderApiController의 orderV3을 위해 사용된다. (성능 최적화를 위해 페치 조인 수행)
-        return em.createQuery("select o from Order o" +
+    public List<Order> findAllWithItem() { // OrderApiController의 orderV3을 위해 사용된다. (성능 최적화를 위해 페치 조인 수행 but 데이터가 뻥튀기 된다 => distinct 사용해야함, 컬렉션 페치 조인을 사용할 경우 단점:페이징 불가능(데이터 뻥튀기 때문에, order가 아닌 orderItems 기준으로 페이징한다.) - 또 이경우 메모리에서 소팅을 하기 때문에 데이터가 많으면 out of memory 발생)
+        return em.createQuery("select distinct o from Order o" +
                                       " join fetch o.member m" +
                                       " join fetch o.delivery d" +
                                       " join fetch o.orderItems oi" +
                                       " join fetch oi.item i", Order.class).getResultList(); // order가 1개이고 orderItems가 4개인 경우에는 데이터가 4개가 된다.
+    }
+
+
+    public List<Order> findAllWithMemberDelivery2() { // (OrderApiController의 orderV3.1를 위해 만들어짐)
+        return em.createQuery("select o from Order o" +
+                " join fetch o.member m" +
+                " join fetch o.delivery d", Order.class).getResultList();
     }
 
 //    public List<Order> findAll(OrderSearch orderSearch) { // queryDSL 없이 검색 구현 => JPA criteria 사용 => 이건 유지보수성이 너무 떨어져서 이것도 권장하지 않음
