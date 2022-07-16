@@ -17,7 +17,7 @@ public class ItemRepository {
         if (item.getId() == null) {
             em.persist(item); // 처음 저장하는 상품인경우 persist
         } else {
-            em.merge(item); // 상품을 수정하는 경우 merge (준영속 엔티티는 변경감지나 merge를 이용해야한다.)
+            em.merge(item); // 상품을 수정하는 경우 merge - 병합 (준영속 엔티티는 변경감지나 merge를 이용해야한다.) https://ppomelo.tistory.com/147 참고
         }
     }
 

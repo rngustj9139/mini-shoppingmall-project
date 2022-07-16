@@ -84,12 +84,12 @@ public class OrderApiController { // OrderSimpleApiController는 ManyToOne이나
     }
 
     @GetMapping("/api/v5/orders")
-    public List<OrderQueryDto> orderV5() {
+    public List<OrderQueryDto> orderV5() { // 쿼리가 1 + 1개만 나간다.
         return orderQueryRepository.findAllByDto_optimization();
     }
 
     @GetMapping("/api/v6/orders")
-    public List<OrderQueryDto> orderV6() { // 상황에 따라 orderV6가 orderV5보다 느릴 수 있다. (쿼리는 한번이지만 데이터 중복이 발생하고 메모리 영역에서 분할을 해주어야한다. - 중복을 없에야한다. 페이징도 불가능)
+    public List<OrderQueryDto> orderV6() { // orderV6는 쿼리가 1개만 나간다. 상황에 따라 orderV6가 orderV5보다 느릴 수 있다. (쿼리는 한번이지만 데이터 중복이 발생하고 메모리 영역에서 분할을 해주어야한다. - 중복을 없에야한다. 페이징도 불가능)
         List<OrderFlatDto> flats = orderQueryRepository.findAllByDto_flat();
 
         return flats.stream() // 데이터 중복 방지, grouping을 사용하려면 OrderQueryDto에 @EqualsAndHashCode 어노테이션을 추가해야함
