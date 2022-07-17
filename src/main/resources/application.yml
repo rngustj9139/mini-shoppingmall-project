@@ -6,6 +6,7 @@ spring:
     driver-class-name: org.h2.Driver # DB 커넥션과 관련된 설정
 
   jpa:
+    open-in-view: true # OSIV (Open Session In View)를 false로 하면 영속성 컨텍스트와 데이터베이스 커넥션이 트랜잭션이 시작하고 끝날때 까지만 유지 된다. (default는 true이다.)
     hibernate:
       ddl-auto: create # 자동으로 테이블을 만듦 => create(어플리케이션 실행시점에 가지고 있는 테이블 다 지우고 새로 생성), 변경사항이 발생했을때만 업데이트 => update
     properties:
