@@ -43,7 +43,7 @@ public class MemberApiController {
     }
 
     @GetMapping("/api/v2/members")
-    public Result membersV2() {
+    public Result membersV2() { // List를 그대로 반환하지 않고 제네릭으로 한번 감싼 후 반환
         List<Member> findMembers = memberService.findMembers();
 
         List<MemberDto> collect = findMembers.stream()
