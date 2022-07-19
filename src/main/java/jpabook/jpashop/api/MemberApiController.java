@@ -38,12 +38,12 @@ public class MemberApiController {
     }
 
     @GetMapping("/api/v1/members")
-    public List<Member> membersV1() {
+    public List<Member> membersV1() { // 그냥 List 형태로 반환하는 것은 좋지 않다 => 제네릭을 써야한다.
         return memberService.findMembers();
     }
 
     @GetMapping("/api/v2/members")
-    public Result memberV2() {
+    public Result membersV2() {
         List<Member> findMembers = memberService.findMembers();
 
         List<MemberDto> collect = findMembers.stream()
@@ -61,7 +61,7 @@ public class MemberApiController {
         return new UpdateMemberResponse(findMember.getId(), findMember.getName());
     }
 
-    @Data // @Getter + @Setter + @ToString + @RequiredAtgsConstructor
+    @Data // @Getter + @Setter + @ToString + @RequiredArgsConstructor
     static class CreateMemberResponse { // 응답값 (json)
 
         private Long id;
