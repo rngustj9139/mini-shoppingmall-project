@@ -15,6 +15,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * XToOne (컬렉션이 아닌것들만 다룰 것임)
+ * Order
+ * Order -> Member
+ * Order -> Delivery
+ **/
 @RestController
 @RequiredArgsConstructor
 public class OrderSimpleApiController {

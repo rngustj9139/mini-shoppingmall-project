@@ -38,7 +38,8 @@ public class OrderApiController { // OrderSimpleApiController는 ManyToOne이나
             order.getDelivery().getAddress();
             List<OrderItem> orderItems = order.getOrderItems();
 
-            orderItems.stream().forEach(o -> o.getItem().getName());
+            orderItems.stream()
+                    .forEach(o -> o.getItem().getName());
         }
 
         return all;
@@ -69,7 +70,7 @@ public class OrderApiController { // OrderSimpleApiController는 ManyToOne이나
     @GetMapping("/api/v3.1/orders")
     public List<OrderDto> orderV3_1(@RequestParam(value = "offset", defaultValue = "0") int offset, // application.yml의 default_batch_fetch_size 확인
                                     @RequestParam(value = "limit", defaultValue = "100") int limit) { // 페이징 수행
-        List<Order> orders = orderRepository.findAllWithMemberDelivery2(offset, limit); // OneToOne, ManyToOne은 그냥 페치 조인을 하고 ToMany(컬렉션 조회)는
+        List<Order> orders = orderRepository.findAllWithMemberDelivery2(offset, limit); // OneToOne, ManyToOne은 그냥 페치 조인을 하고 ToMany(컬렉션 조회)는 페치 조인시 데이터 뻥튀기 문제가 발생한다. => default_batch_fetch_size 이용해야한다.
 
         List<OrderDto> collect = orders.stream()
                 .map(o -> new OrderDto(o))

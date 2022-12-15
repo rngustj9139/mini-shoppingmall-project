@@ -110,7 +110,7 @@ public class OrderRepository {
                                 " join fetch o.delivery d", Order.class).getResultList();
     }
 
-    public List<OrderSimpleQueryDto> findOrderDtos() { // (OrderSim[leApiController의 orderV4를 위해 만들어짐)
+    public List<OrderSimpleQueryDto> findOrderDtos() { // (OrderSimpleApiController의 orderV4를 위해 만들어짐)
         return em.createQuery("select new jpabook.jpashop.repository.simplequery.OrderSimpleQueryDto(o.id, m.name, o.orderDate, o.status, d.address) from Order o" +
                               " join o.member m" +
                               " join o.delivery d", OrderSimpleQueryDto.class).getResultList();
