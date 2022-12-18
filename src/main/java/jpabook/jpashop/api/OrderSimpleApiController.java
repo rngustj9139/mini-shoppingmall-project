@@ -39,7 +39,7 @@ public class OrderSimpleApiController {
         return all;
     }
 
-    @GetMapping("/api/v2/simple-orders")
+    @GetMapping("/api/v2/simple-orders") // 엔티티를 dto로 바꾸는 과정에서 프록시가 실제 객체로 변환된다.
     public List<SimpleOrderDto> orderV2() { // 원래 DTO들의 묶음을 List로 반환하지 않고 한번 감싸서 반환해야함, v1과 v2 모두 LAZY 로딩시 쿼리가 너무 많이 나간다는 단점이 존재한다.
         List<Order> orders = orderRepository.findAll(new OrderSearch());
         List<SimpleOrderDto> result = orders.stream()

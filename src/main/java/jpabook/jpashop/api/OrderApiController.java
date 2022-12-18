@@ -57,7 +57,7 @@ public class OrderApiController { // OrderSimpleApiController는 ManyToOne이나
     }
 
     @GetMapping("/api/v3/orders")
-    public List<OrderDto> orderV3() {
+    public List<OrderDto> orderV3() { // 페치 조인 적용
         List<Order> orders = orderRepository.findAllWithItem();
 
         List<OrderDto> collect = orders.stream()
@@ -79,7 +79,7 @@ public class OrderApiController { // OrderSimpleApiController는 ManyToOne이나
         return collect;
     }
 
-    @GetMapping("/api/v4/orders") // 컬렉션 조회시 1 + N 문제 존재
+    @GetMapping("/api/v4/orders") // 컬렉션 조회시 1 + N 문제 존재 (DTO 직접 조회)
     public List<OrderQueryDto> orderV4() {
         return orderQueryRepository.findOrderQueryDtos();
     }
