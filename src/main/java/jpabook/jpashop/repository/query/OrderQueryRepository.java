@@ -62,8 +62,9 @@ public class OrderQueryRepository { // OrderApiController의 orderV4를 위해 �
                 .setParameter("orderIds", orderIds)
                 .getResultList();
 
-        Map<Long, List<OrderItemQueryDto>> orderItemsMap = orderItems.stream() // List를 Map으로 바꾸기 (이때 id가 사용된다, 또 Map은 메모리 위에 올라간다.)
+        Map<Long, List<OrderItemQueryDto>> orderItemsMap = orderItems.stream() // List를 Map으로 바꾸기 (이때 order id가 사용된다 - order id를 기준으로 map에서 orderitems를 가져올 수 있다., 또 Map은 메모리 위에 올라간다.)
                 .collect(Collectors.groupingBy(orderItemQueryDto -> orderItemQueryDto.getOrderId()));
+
         return orderItemsMap;
     }
 
@@ -71,6 +72,7 @@ public class OrderQueryRepository { // OrderApiController의 orderV4를 위해 �
         List<Long> orderIds = result.stream()
                 .map(o -> o.getOrderId())
                 .collect(Collectors.toList());
+
         return orderIds;
     }
 
